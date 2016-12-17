@@ -1,0 +1,132 @@
+﻿<Page x:Class="Chaotica___LingoIO.Views.LessonsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Chaotica___LingoIO.Views"
+      xmlns:CoreApp="using:Chaotica___LingoIO.Core"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Chaotica___LingoIO.ViewModels"
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:LessonsPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <CoreApp:ObjectImageConverter x:Key="ObjImageConverter" />
+    </Page.Resources>
+
+    <RelativePanel Background="{ThemeResource SystemAccentColor}">
+
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for narrow view  -->
+                        <Setter Target="stateTextBox.Text" Value="Narrow Visual State" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for normal view  -->
+                        <Setter Target="stateTextBox.Text" Value="Normal Visual State" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for wide view  -->
+                        <Setter Target="stateTextBox.Text" Value="Wide Visual State" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <controls:PageHeader x:Name="pageHeader"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True"
+                             Text="Lessons">
+
+            <!--  secondary commands  -->
+            <controls:PageHeader.SecondaryCommands>
+                <!--<AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />-->
+            </controls:PageHeader.SecondaryCommands>
+
+        </controls:PageHeader>
+
+        <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True"
+                       RelativePanel.Below="pageHeader">
+
+
+            <ItemsControl>
+                <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0" Visibility="Collapsed">
+
+                    <TextBox MinWidth="150"
+                         MinHeight="62"
+                         Header="Parameter to pass"
+                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="Wrap">
+                        <Interactivity:Interaction.Behaviors>
+
+                            <Behaviors:KeyBehavior Key="Enter">
+                                <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
+                            </Behaviors:KeyBehavior>
+
+                            <Core:EventTriggerBehavior>
+                                <Behaviors:FocusAction />
+                            </Core:EventTriggerBehavior>
+
+                        </Interactivity:Interaction.Behaviors>
+                    </TextBox>
+
+                </controls:Resizer>
+
+                <Button x:Name="submitButton"
+                    Content="Submit"
+                    RelativePanel.AlignBottomWith="parameterResizer"
+                    RelativePanel.RightOf="parameterResizer" Visibility="Collapsed" />
+
+                <TextBlock x:Name="stateTextBox"
+                       Margin="16,16,0,0"
+                       RelativePanel.AlignLeftWith="parameterResizer"
+                       RelativePanel.Below="parameterResizer"
+                       Text="Current Visual State" Visibility="Collapsed" />
+            </ItemsControl>
+
+
+
+            <GridView x:Name="gView" ItemsSource="{x:Bind Lessons}" IsItemClickEnabled="True" ItemClick="gView_ItemClick" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="CoreApp:ChaoticaLesson">
+                        <StackPanel Padding="10">
+                            <Image Margin="5" Source="{x:Bind Image, Converter={StaticResource ObjImageConverter}, Mode=OneWay}" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+            
+        </RelativePanel>
+
+    </RelativePanel>
+</Page>

@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Montray Davis\documents\visual studio 2015\Projects\Virtual Call Center\Chaotica - LingoIO\bin\x86\Release\Chaotica - LingoIO_0.1.0.0_x86.appx
+SymbolPackage=C:\Users\Montray Davis\documents\visual studio 2015\Projects\Virtual Call Center\Chaotica - LingoIO\AppPackages\Chaotica - LingoIO_0.1.0.0_Test\Chaotica - LingoIO_0.1.0.0_x86.appxsym

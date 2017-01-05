@@ -38,7 +38,7 @@ namespace Chaotica___LingoIO.ViewModels
         {
             if (suspensionState.Any())
             {
-                Lessons = (ObservableCollection < ChaoticaLesson > )suspensionState[nameof(Lessons)];
+
             }
             await Task.CompletedTask;
         }
@@ -58,9 +58,9 @@ namespace Chaotica___LingoIO.ViewModels
             await Task.CompletedTask;
         }
 
-        public void GotoExamine(object sender, ObservableCollection<ChaoticaQuestion> questions)
+        public void GotoExamine(object sender)
         {
-            NavigationService.Navigate(typeof(Views.ExaminePage), (ObservableCollection<ChaoticaQuestion>)questions);
+            NavigationService.Navigate(typeof(Views.ExaminePage));
         }
 
 

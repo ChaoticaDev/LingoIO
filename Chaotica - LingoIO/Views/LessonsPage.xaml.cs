@@ -29,12 +29,7 @@ namespace Chaotica___LingoIO.Views
 
         protected override void OnNavigatedTo (NavigationEventArgs e)
         {
-            this.Lessons = Template10.Services.SerializationService.SerializationService.Json.Deserialize<ObservableCollection<ChaoticaLesson>>(e.Parameter?.ToString());
-
-            foreach(ChaoticaLesson lesson in this.Lessons)
-            {
-                lesson.ImageSource = lesson.TmpImageSource;
-            }
+            this.Lessons = ChaoticaCore.SelectedCourse.Lessons;
         }
 
         public LessonsPage()
@@ -44,8 +39,8 @@ namespace Chaotica___LingoIO.Views
 
         private void gView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ObservableCollection<ChaoticaQuestion> questions = ((ChaoticaLesson)e.ClickedItem).Questions;
-            ViewModel.GotoExamine(sender, questions);
+            ChaoticaCore.SelectedLesson = ((ChaoticaLesson)e.ClickedItem);
+            ViewModel.GotoExamine(sender);
         }
     }
 }

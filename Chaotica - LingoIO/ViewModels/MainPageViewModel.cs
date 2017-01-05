@@ -60,9 +60,9 @@ namespace Chaotica___LingoIO.ViewModels
         public void GotoAbout() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 2);
 
-        public void GotoLessons(object sender, ObservableCollection<ChaoticaLesson> lessons)
+        public void GotoLessons(object sender)
         {
-            NavigationService.Navigate(typeof(Views.LessonsPage), (ObservableCollection < ChaoticaLesson > )lessons);
+            NavigationService.Navigate(typeof(Views.LessonsPage));
         }
 
     }

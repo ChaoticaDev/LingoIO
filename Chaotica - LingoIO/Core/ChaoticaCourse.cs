@@ -13,7 +13,7 @@ namespace Chaotica___LingoIO.Core
     public class ChaoticaCourse : INotifyPropertyChanged
     {
 
-        private String _Title, _Description;
+        private String _ID, _Title, _Description;
 
         private ObservableCollection<ChaoticaLesson> _Lessons;
 
@@ -34,6 +34,22 @@ namespace Chaotica___LingoIO.Core
                 NotifyPropertyChanged("Title");
             }
         }
+
+        public String ID
+        {
+
+            get
+            {
+                return this._ID;
+            }
+
+            set
+            {
+                _ID = value;
+                NotifyPropertyChanged("ID");
+            }
+        }
+
         public String Description
         {
 
@@ -49,13 +65,12 @@ namespace Chaotica___LingoIO.Core
             }
         }
 
-
         public ImageSource Image;
         public String ImageSource
         {
             private get
             {
-                return "";
+                return null;
             }
 
             set
@@ -87,8 +102,9 @@ namespace Chaotica___LingoIO.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ChaoticaCourse(String __Title, String __Description)
+        public ChaoticaCourse(String __ID, String __Title, String __Description)
         {
+            this.ID = __ID;
             this.Title = __Title;
             this.Description = __Description;
 

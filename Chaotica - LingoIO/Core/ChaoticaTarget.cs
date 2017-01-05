@@ -11,7 +11,11 @@ namespace Chaotica___LingoIO.Core
     public class ChaoticaTarget : INotifyPropertyChanged
     {
 
-        private String _Title;
+        private String _Title, _ID;
+
+        public String WID;
+
+        public List<List<ChaoticaWord>> Combinations;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,15 +35,34 @@ namespace Chaotica___LingoIO.Core
             }
         }
 
+        public String ID
+        {
+
+            get
+            {
+                return this._ID;
+            }
+
+            set
+            {
+                _ID = value;
+                NotifyPropertyChanged("ID");
+            }
+        }
+
+        public ChaoticaLanguage Language { get; private set; }
+
         private void NotifyPropertyChanged(String propertyName = "")
 
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ChaoticaTarget(String __Title)
+        public ChaoticaTarget(String __ID, ChaoticaLanguage __LANG)
         {
-            this.Title = __Title;
+            this.ID = __ID;
+            this.Language = __LANG;
+            this.Combinations = new List<List<ChaoticaWord>>();
         }
     }
 }

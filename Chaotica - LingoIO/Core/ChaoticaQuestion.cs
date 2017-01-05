@@ -17,7 +17,7 @@ namespace Chaotica___LingoIO.Core
     public class ChaoticaQuestion : INotifyPropertyChanged
     {
 
-        private String _Title;
+        private String _Title, _ID;
 
         private ObservableCollection<ChaoticaTarget> _PossibleAnswers;
 
@@ -25,6 +25,22 @@ namespace Chaotica___LingoIO.Core
 
         public ChaoticaLanguage LanguageFrom = ChaoticaLanguage.English;
         public ChaoticaLanguage LanguageTo = ChaoticaLanguage.English;
+
+
+        public String ID
+        {
+
+            get
+            {
+                return this._ID;
+            }
+
+            set
+            {
+                _ID = value;
+                NotifyPropertyChanged("ID");
+            }
+        }
 
         public String Title
         {
@@ -43,7 +59,6 @@ namespace Chaotica___LingoIO.Core
 
         public ObservableCollection<ChaoticaTarget> PossibleAnswers
         {
-
             get
             {
                 return this._PossibleAnswers;
@@ -62,8 +77,9 @@ namespace Chaotica___LingoIO.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ChaoticaQuestion(String __Title, ChaoticaLanguage __LanguageFrom = ChaoticaLanguage.English, ChaoticaLanguage __LanguageTo = ChaoticaLanguage.Spanish)
+        public ChaoticaQuestion(String __ID, String __Title, ChaoticaLanguage __LanguageFrom = ChaoticaLanguage.English, ChaoticaLanguage __LanguageTo = ChaoticaLanguage.Spanish)
         {
+            this.ID = __ID;
             this.Title = __Title;
             this.LanguageFrom = __LanguageFrom;
             this.LanguageTo = __LanguageTo;

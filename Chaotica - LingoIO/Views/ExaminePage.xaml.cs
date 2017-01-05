@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Chaotica___LingoIO.Core;
 using Windows.UI.Xaml.Navigation;
 using System;
+using System.ComponentModel;
 
 namespace Chaotica___LingoIO.Views
 {
@@ -35,12 +36,13 @@ namespace Chaotica___LingoIO.Views
 
         //Keep track of examine state. Default = MODE_DEFAULT
         private ChaoticaExamineState State = ChaoticaExamineState.MODE_DEFAULT;
-
+        
+        long startTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) / 1000;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //Deserialize questions
-            this.Questions = Template10.Services.SerializationService.SerializationService.Json.Deserialize<ObservableCollection<ChaoticaQuestion>>(e.Parameter?.ToString());
+            this.Questions = ChaoticaCore.SelectedLesson.Questions;
 
             //Set question count
             this.question_count = this.Questions.Count;
@@ -87,6 +89,8 @@ namespace Chaotica___LingoIO.Views
         //Answer question
         private bool AnswerQuestion(String answer)
         {
+            int diffTime = Convert.ToInt32(((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) / 1000) - startTime);
+
             //Keep track of answer found
             bool found = false;
 
@@ -95,11 +99,40 @@ namespace Chaotica___LingoIO.Views
             {
                 //If possible answer matches input
                 //Convert to lower to prevent capitalization issues
-                if (target.Title.ToLower() == answer.ToLower())
+                foreach (var possible_answer in currentQuestion.PossibleAnswers)
                 {
-                    //Is found
-                    found = true;
+                    String combos = "";
+
+                    int i = 0;
+                    foreach(var combo in possible_answer.Combinations)
+                    {
+                        foreach(ChaoticaWord wrd in combo)
+                        {
+                            if (i == 0)
+                            {
+                                combos += wrd.Text;
+                            }
+                            else
+                            {
+                                combos += " " + wrd.Text;
+                            }
+                            i++;
+                        }
+
+                        String ans = answer.ToLower().Trim(new char[] { '?', '!', '.', '/', '\\', '"', '`', '~', ',' });
+                        String cmb = combos.ToLower().Trim(new char[] { '?', '!', '.', '/', '\\', '"', '`', '~', ',' });
+
+                        //Set to true if found
+                        //This ensures found is not set to false if already found. (found == true)
+                        found = found == true ? true : cmb == ans;
+
+                        if (found)
+                        {
+                            break;
+                        }
+                    }
                 }
+                
             }
             
 
@@ -127,16 +160,20 @@ namespace Chaotica___LingoIO.Views
         {
             InitializeComponent();
         }
-        
+
         //Submit Answer Button Clicked
         private void SubmitAnswerBTN_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            //Keep track of answer
             String answer = this.AnswerTB.Text;
+
+            //Clear Input
             this.ClearInput();
 
             //If awaiting answer
             if ( this.State == ChaoticaExamineState.MODE_DEFAULT)
             {
+                //Answer the question
                 bool correct = this.AnswerQuestion(answer);
 
                 if (correct)

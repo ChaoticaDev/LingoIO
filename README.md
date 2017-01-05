@@ -5,17 +5,17 @@ The ultimate goal of this project is to create a language learning suite for Win
 
 ![Screenshot](https://github.com/ChaoticaDev/LingoIO/blob/master/ss/ex1.png)
 
-## Initial Version Release 0.1.0.0
+## Version Release 0.1.0.0
 - Utilizes Template10
 - Basic Flashcards System
 - English Support (Base language)
 - English -> Spanish flashcards
 - Spanish -> English flashcards
 
-## Limitations
-- Very basic
-- No database support yet
-
+----
+## Current Version Release 0.1.4.0
+- Sentences are now broken up into single words. (Posibility to keep progress on learned words).
+- Database support
 
 ## What's planned for release 0.2.0.0
 - Database support

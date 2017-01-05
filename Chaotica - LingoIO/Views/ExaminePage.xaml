@@ -135,6 +135,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -147,6 +148,10 @@
 
                     <Grid Grid.Row="2">
                         <Button x:Name="SubmitAnswerBTN" Click="SubmitAnswerBTN_Click" Content="Answer" Margin="5" HorizontalAlignment="Stretch" />
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <TextBlock x:Name="TimerTB" Margin="5" HorizontalAlignment="Stretch" />
                     </Grid>
                 </Grid>
             </Grid>

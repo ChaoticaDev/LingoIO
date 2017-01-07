@@ -3,7 +3,7 @@ Language Learning Software for Windows10 Store Apps.
 
 The ultimate goal of this project is to create a language learning suite for Windows10 Store Apps.
 
-![Screenshot](https://github.com/ChaoticaDev/LingoIO/blob/master/ss/ex1.png)
+![Screenshot](https://github.com/ChaoticaDev/LingoIO/blob/master/ss/ex4.png)
 
 ## Version Release 0.1.0.0
 - Utilizes Template10

@@ -19,6 +19,8 @@ namespace Chaotica___LingoIO.Core
 
         private String _Title, _ID;
 
+        private ObservableCollection<ChaoticaWord> _Words;
+
         private ObservableCollection<ChaoticaTarget> _PossibleAnswers;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -71,6 +73,20 @@ namespace Chaotica___LingoIO.Core
             }
         }
 
+        public ObservableCollection<ChaoticaWord> Words
+        {
+            get
+            {
+                return this._Words;
+            }
+
+            set
+            {
+                _Words = value;
+                NotifyPropertyChanged("Words");
+            }
+        }
+
         private void NotifyPropertyChanged(String propertyName = "")
 
         {
@@ -85,6 +101,7 @@ namespace Chaotica___LingoIO.Core
             this.LanguageTo = __LanguageTo;
 
             this.PossibleAnswers = new ObservableCollection<ChaoticaTarget>();
+            this._Words = new ObservableCollection<ChaoticaWord>();
         }
     }
 }

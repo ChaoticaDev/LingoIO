@@ -12,8 +12,10 @@ namespace Chaotica___LingoIO.Core
     {
 
         private String _Text;
+        private String _Counterpart;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
 
 
         public String Text
@@ -31,14 +33,30 @@ namespace Chaotica___LingoIO.Core
             }
         }
 
+        public String Counterpart
+        {
+
+            get
+            {
+                return this._Counterpart;
+            }
+
+            set
+            {
+                _Counterpart = value;
+                NotifyPropertyChanged("Counterpart");
+            }
+        }
+
         private void NotifyPropertyChanged(String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ChaoticaWord(String __Title)
+        public ChaoticaWord(String __Title, String __Counterpart)
         {
             this.Text = __Title;
+            this.Counterpart = __Counterpart;
         }
     }
 }

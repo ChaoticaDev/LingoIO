@@ -4,6 +4,9 @@ using Chaotica___LingoIO.Core;
 using Windows.UI.Xaml.Navigation;
 using System;
 using System.ComponentModel;
+using MySql.Data.MySqlClient;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace Chaotica___LingoIO.Views
 {
@@ -12,11 +15,13 @@ namespace Chaotica___LingoIO.Views
         enum ChaoticaExamineState
         {
             MODE_DEFAULT, // State, Awaiting answer
+            MODE_PREVIEW, // State, Preview the card
             MODE_CORRECTION, // State, Show correct or false
             MODE_FINISHED // State, Finished
         }
 
         internal ObservableCollection<ChaoticaQuestion> Questions;
+        internal ObservableCollection<ChaoticaWord> lWords;
 
         // Keep track of question count
         private int question_count = 0;
@@ -43,6 +48,7 @@ namespace Chaotica___LingoIO.Views
         {
             //Deserialize questions
             this.Questions = ChaoticaCore.SelectedLesson.Questions;
+            this.lWords = new ObservableCollection<ChaoticaWord>();
 
             //Set question count
             this.question_count = this.Questions.Count;
@@ -52,6 +58,21 @@ namespace Chaotica___LingoIO.Views
 
             //Set question title = first question title
             this.QuestionTitleTB.Text = this.currentQuestion.Title;
+
+            lWords.Clear();
+
+            foreach (String word in this.currentQuestion.Title.Split(' '))
+            {
+                ChaoticaWord wrd = null;
+                String Lang = this.currentQuestion.LanguageFrom == ChaoticaLanguage.English ? "Spanish" : "English";
+                
+                wrd = new ChaoticaWord(word, ChaoticaCore.DataCached.VocabularyCache[Lang][word][0]);
+                
+                lWords.Add(wrd);
+            }
+
+            WordsPreviewGV.ItemsSource = null;
+            WordsPreviewGV.ItemsSource = lWords;
         }
 
         //Examine finished
@@ -70,12 +91,18 @@ namespace Chaotica___LingoIO.Views
         //Set next question title
         private void NextQuestion()
         {
+            //Clear Words Preview (Flyout)
+            WordsPreviewGV.ItemsSource = null;
+
             //If all questions not answered.
             if (question_index >= question_count - 1)
             {
                 this.Finish();
                 return;
             }
+
+            this.AnswerTB.IsEnabled = true;
+            this.SubmitAnswerBTN.Content = "Answer";
 
             this.AnswerTB.Focus(Windows.UI.Xaml.FocusState.Programmatic);
 
@@ -84,6 +111,21 @@ namespace Chaotica___LingoIO.Views
 
             //Set question title
             this.QuestionTitleTB.Text = this.currentQuestion.Title;
+
+            lWords.Clear();
+
+            foreach (String word in this.currentQuestion.Title.Split(' '))
+            {
+                ChaoticaWord wrd = null;
+                String Lang = this.currentQuestion.LanguageFrom == ChaoticaLanguage.English ? "Spanish" : "English";
+
+                wrd = new ChaoticaWord(word, ChaoticaCore.DataCached.VocabularyCache[Lang][word][0]);
+
+                lWords.Add(wrd);
+            }
+
+            WordsPreviewGV.ItemsSource = null;
+            WordsPreviewGV.ItemsSource = lWords;
         }
 
         //Answer question
@@ -196,14 +238,15 @@ namespace Chaotica___LingoIO.Views
             {
                 //Go to next question
                 this.NextQuestion();
-
-                //Enabled input
-                this.AnswerTB.IsEnabled = true;
-                this.SubmitAnswerBTN.Content = "Answer";
-
+                
                 //Switch state = MODE_DEFAULT
                 this.State = ChaoticaExamineState.MODE_DEFAULT;
             }
+        }
+
+        private void ChaoticaWordBTN_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ((Button)sender).Foreground = new SolidColorBrush(Colors.White);
         }
     }
 }

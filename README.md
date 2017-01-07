@@ -13,9 +13,15 @@ The ultimate goal of this project is to create a language learning suite for Win
 - Spanish -> English flashcards
 
 ----
-## Current Version Release 0.1.4.0
+## Version Release 0.1.4.0
 - Sentences are now broken up into single words. (Posibility to keep progress on learned words).
 - Database support
+
+----
+## Current Version Release 0.1.5.0
+- Word highlighting. Forgot a word? Click to reveal.
+- Load vocabulary words
+- Data Caching (Simple-Experimental)
 
 ## What's planned for release 0.2.0.0
 - Database support

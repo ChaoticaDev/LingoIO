@@ -46,6 +46,37 @@ namespace Chaotica___LingoIO.Core
 
         public static class CourseUtils
         {
+            public static Dictionary<String, Dictionary<String, List<String>>> BindVocabulary()
+            {
+                Dictionary<String, Dictionary<String, List<String>>> dict = new Dictionary<String, Dictionary<String, List<String>>>();
+
+                dict.Add("English", new Dictionary<String, List<String>>());
+                dict.Add("Spanish", new Dictionary<String, List<String>>());
+
+                MySqlDataReader reader = ChaoticaDBManager.Query("SELECT * FROM english_words");
+
+                while (reader.Read())
+                {
+                    String TitleText = reader.GetString("Title");
+                    dict["English"].Add(TitleText, new List<String>());
+                    dict["English"][TitleText].Insert(0, reader.GetString("Spanish"));
+                }
+
+                reader.Close();
+
+                reader = ChaoticaDBManager.Query("SELECT * FROM spanish_words");
+
+                while (reader.Read())
+                {
+                    String TitleText = reader.GetString("Title");
+                    dict["Spanish"].Add(TitleText, new List<String>());
+                    dict["Spanish"][TitleText].Insert(0, reader.GetString("English"));
+                }
+
+                reader.Close();
+
+                return dict;
+            }
             public static void BindLessons()
             {
                 foreach (ChaoticaCourse crs in Courses)
@@ -106,6 +137,15 @@ namespace Chaotica___LingoIO.Core
             }
         }
 
+        public static class DataCached
+        {
+            public static Dictionary<String, Dictionary<String, List<String>>> VocabularyCache;
+
+            public static void CacheInit()
+            {
+                VocabularyCache = new Dictionary<String, Dictionary<String, List<String>>>();
+            }
+        }
 
         public static class DatabaseUtils
         {
@@ -192,7 +232,8 @@ namespace Chaotica___LingoIO.Core
                 ChaoticaWord word = null;
                 while (reader.Read())
                 {
-                    word = new ChaoticaWord(reader.GetString("Title"));
+                    String counterpart = reader.GetString(lang == ChaoticaLanguage.English ? "Spanish" : "English");
+                    word = new ChaoticaWord(reader.GetString("Title"), counterpart);
                 }
                 reader.Close();
 

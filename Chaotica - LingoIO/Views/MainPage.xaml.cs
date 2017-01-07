@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Chaotica___LingoIO.Core;
 using System.Collections.Generic;
 using static Chaotica___LingoIO.Core.ChaoticaCore;
+using System;
 
 namespace Chaotica___LingoIO.Views
 {
@@ -29,12 +30,17 @@ namespace Chaotica___LingoIO.Views
         {
             await ChaoticaCoreWindow.xAsync(() => 
             {
+                //Load vocabulary
+                ChaoticaCore.DataCached.VocabularyCache = CourseUtils.BindVocabulary();
+
+                //Bind course data
                 ChaoticaCore.Courses = ChaoticaCore.DatabaseUtils.GetCourses();
                 CourseUtils.BindLessons();
                 CourseUtils.BindQuestions();
                 CourseUtils.BindTargets();
                 CourseUtils.BindWords();
 
+                //Update course collection
                 this.Courses = ChaoticaCore.Courses;
                 return true;
             });
@@ -43,6 +49,8 @@ namespace Chaotica___LingoIO.Views
         public MainPage()
         {
             InitializeComponent();
+
+            ChaoticaCore.DataCached.CacheInit();
 
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 

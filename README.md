@@ -24,7 +24,6 @@ The ultimate goal of this project is to create a language learning suite for Win
 - Data Caching (Simple-Experimental)
 
 ## What's planned for release 0.2.0.0
-- Database support
 - User Profiles
 - Streaks
 - Scores

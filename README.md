@@ -18,11 +18,18 @@ The ultimate goal of this project is to create a language learning suite for Win
 - Database support
 
 ----
-## Current Version Release 0.1.5.0
+## Version Release 0.1.5.0
 - Word highlighting. Forgot a word? Click to reveal.
 - Load vocabulary words
 - Data Caching (Simple-Experimental)
 
+----
+## Current Version Release 0.1.6.0
+- Bug fixes
+- Added more sentences to lesson
+- Updated assets
+
+----
 ## What's planned for release 0.2.0.0
 - User Profiles
 - Streaks

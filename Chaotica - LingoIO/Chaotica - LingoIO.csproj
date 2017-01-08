@@ -205,8 +205,6 @@
     <Content Include="Assets\Sofa-96.png" />
     <Content Include="Assets\Speech Bubble-96.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Strike-96.png" />
     <Content Include="Assets\Trash-96.png" />
@@ -226,6 +224,7 @@
     <Content Include="Assets\Windows Phone Store-96.png" />
     <Content Include="Assets\Windows8-96.png" />
     <Content Include="Assets\_StoreLogo.scale-100.png" />
+    <Content Include="Assets\_StoreLogo.scale-125.png" />
     <Content Include="Help.htm" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
@@ -233,7 +232,6 @@
     <Content Include="Assets\_SplashScreen.scale-200.png" />
     <Content Include="Assets\_Square150x150Logo.scale-200.png" />
     <Content Include="Assets\_Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\_Wide310x150Logo.scale-200.png" />
   </ItemGroup>

@@ -58,7 +58,11 @@ namespace Chaotica___LingoIO.Core
                 while (reader.Read())
                 {
                     String TitleText = reader.GetString("Title");
-                    dict["English"].Add(TitleText, new List<String>());
+
+                    if (dict["English"].ContainsKey(TitleText) == false)
+                    {
+                        dict["English"].Add(TitleText, new List<String>());
+                    }
                     dict["English"][TitleText].Insert(0, reader.GetString("Spanish"));
                 }
 
@@ -69,7 +73,10 @@ namespace Chaotica___LingoIO.Core
                 while (reader.Read())
                 {
                     String TitleText = reader.GetString("Title");
-                    dict["Spanish"].Add(TitleText, new List<String>());
+                    if (dict["Spanish"].ContainsKey(TitleText) == false)
+                    {
+                        dict["Spanish"].Add(TitleText, new List<String>());
+                    }
                     dict["Spanish"][TitleText].Insert(0, reader.GetString("English"));
                 }
 
@@ -125,7 +132,8 @@ namespace Chaotica___LingoIO.Core
                                 List<ChaoticaWord> words = new List<ChaoticaWord>();
                                 foreach(String id in ids)
                                 {
-                                    words.Add(DatabaseUtils.GetWord(trg.Language, id));
+                                    ChaoticaWord tmpWord = DatabaseUtils.GetWord(trg.Language, id);
+                                    words.Add(tmpWord);
                                 }
 
                                 trg.Combinations.Add(words);

@@ -95,7 +95,7 @@ namespace Chaotica___LingoIO.Views
             WordsPreviewGV.ItemsSource = null;
 
             //If all questions not answered.
-            if (question_index >= question_count - 1)
+            if (question_index >= question_count)
             {
                 this.Finish();
                 return;
@@ -179,7 +179,7 @@ namespace Chaotica___LingoIO.Views
             
 
             //If all questions not answered.
-            if ( question_index < question_count-1)
+            if ( question_index < question_count)
             {
 
                 //Next question

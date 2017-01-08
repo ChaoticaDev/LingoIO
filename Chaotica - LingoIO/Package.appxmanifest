@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="31818MontrayDavis-Chaotic.Chaotica-LingoIO" Publisher="CN=CAF6E719-F664-40F2-92D5-3513F7AACCE2" Version="0.1.0.0" />
+  <Identity Name="31818MontrayDavis-Chaotic.Chaotica-LingoIO" Publisher="CN=CAF6E719-F664-40F2-92D5-3513F7AACCE2" Version="0.1.6.0" />
   <mp:PhoneIdentity PhoneProductId="3b286d47-f08b-4260-9cb3-40262ebb48e3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Chaotica - LingoIO</DisplayName>

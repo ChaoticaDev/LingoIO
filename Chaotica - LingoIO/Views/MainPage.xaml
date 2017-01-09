@@ -10,7 +10,7 @@
       xmlns:CoreApp="using:Chaotica___LingoIO.Core"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Chaotica___LingoIO.ViewModels"
-      mc:Ignorable="d">
+      mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
@@ -115,9 +115,22 @@
             </ItemsControl>
 
 
+            <StackPanel x:Name="LoginPanelSP" Visibility="Visible" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="LoginStatusTB" Text="Login" Foreground="White" TextAlignment="Center" FontSize="30" />
+                <Image Source="ms-appx:///Assets/_StoreLogo.png" Width="100" Height="100" />
 
+                <TextBox x:Name="UsernameTB" Loaded="UsernameTB_Loaded" PlaceholderText="Username" />
+                <TextBox x:Name="PasswordTB" Loaded="PasswordTB_Loaded" PlaceholderText="Password" />
 
-            <GridView ItemsSource="{x:Bind Courses}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="LoginBTN" Click="LoginBTN_Click" Content="Login" Margin="5" />
+                    <Button x:Name="RegBTN" Click="RegBTN_Click" Content="Register" Margin="5" />
+                </StackPanel>
+            </StackPanel>
+
+            
+
+            <GridView x:Name="CoursesGV" Visibility="Collapsed" ItemsSource="{x:Bind Courses}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="CoreApp:ChaoticaCourse">
                         <StackPanel Padding="10">
@@ -128,6 +141,7 @@
                 </GridView.ItemTemplate>
             </GridView>
 
+            
         </RelativePanel>
 
     </RelativePanel>

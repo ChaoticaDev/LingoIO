@@ -217,15 +217,17 @@ namespace Chaotica___LingoIO.Views
             {
                 //Answer the question
                 bool correct = this.AnswerQuestion(answer);
-
+                
                 if (correct)
                 {
                     this.QuestionTitleTB.Text = "Correct!";
                     this.num_right++;
+                    ColorStoryboardSuccess.Begin();
                 }else
                 {
                     this.QuestionTitleTB.Text = "Wrong!";
                     this.num_wrong++;
+                    ColorStoryboardFail.Begin();
                 }
 
                 //Disable input
@@ -238,6 +240,8 @@ namespace Chaotica___LingoIO.Views
             {
                 //Go to next question
                 this.NextQuestion();
+
+                ColorStoryboard.Begin();
                 
                 //Switch state = MODE_DEFAULT
                 this.State = ChaoticaExamineState.MODE_DEFAULT;

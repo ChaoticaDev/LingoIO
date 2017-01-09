@@ -25,6 +25,74 @@ namespace Chaotica___LingoIO.Core
             });
         }
 
+        public static String GenAuthKey()
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < 100; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+
+        public static String Authenticate(String username, String password)
+        {
+            bool auth = false;
+
+            MySqlDataReader reader = ChaoticaDBManager.Query("SELECT * FROM accounts WHERE `Username` = '" + username + "' AND `Password` = '" + password + "' LIMIT 1");
+
+            while (reader.Read())
+            {
+                auth = true;
+                DataCached.localSettings.Values["UID"] = reader.GetString("ID");
+                DataCached.localSettings.Values["Username"] = reader.GetString("Username");
+            }
+
+            reader.Close();
+
+            if (!auth)
+            {
+                return null;
+            }
+
+            String newAuthKey = GenAuthKey();
+            DataCached.localSettings.Values["AuthKey"] = newAuthKey;
+            ChaoticaDBManager.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "' LIMIT 1");
+
+            return newAuthKey;
+        }
+
+        public static String Authenticate(String auth_key)
+        {
+            bool auth = false;
+
+            MySqlDataReader reader = ChaoticaDBManager.Query("SELECT * FROM accounts WHERE auth = '" + auth_key + "'");
+
+            while (reader.Read())
+            {
+                auth = true;
+                DataCached.localSettings.Values["UID"] = reader.GetString("ID");
+                DataCached.localSettings.Values["Username"] = reader.GetString("Username");
+            }
+
+
+            reader.Close();
+
+            if (!auth)
+            {
+                return null;
+            }
+
+            String newAuthKey = GenAuthKey();
+            DataCached.localSettings.Values["AuthKey"] = newAuthKey;
+            ChaoticaDBManager.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "'");
+
+            return newAuthKey;
+        }
+
         public static class Utils
         {
             public static string RemoveSpecialCharacters(string str)
@@ -148,6 +216,9 @@ namespace Chaotica___LingoIO.Core
         public static class DataCached
         {
             public static Dictionary<String, Dictionary<String, List<String>>> VocabularyCache;
+
+            public static Windows.Storage.ApplicationDataContainer localSettings =  Windows.Storage.ApplicationData.Current.LocalSettings;
+            public static Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
             public static void CacheInit()
             {

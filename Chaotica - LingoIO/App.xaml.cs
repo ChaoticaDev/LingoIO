@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
+using Chaotica___LingoIO.Core;
 
 namespace Chaotica___LingoIO
 {
@@ -17,6 +18,7 @@ namespace Chaotica___LingoIO
     [Bindable]
     sealed partial class App : BootStrapper
     {
+
         public App()
         {
             InitializeComponent();

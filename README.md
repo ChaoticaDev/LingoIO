@@ -24,10 +24,15 @@ The ultimate goal of this project is to create a language learning suite for Win
 - Data Caching (Simple-Experimental)
 
 ----
-## Current Version Release 0.1.6.0
+## Version Release 0.1.6.0
 - Bug fixes
 - Added more sentences to lesson
 - Updated assets
+
+----
+## Current Version Release 0.1.7.0
+- Added accounts (login/register)
+
 
 ----
 ## What's planned for release 0.2.0.0

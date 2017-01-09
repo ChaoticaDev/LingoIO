@@ -31,6 +31,11 @@ namespace Chaotica___LingoIO.Views
 
         public async void LoadInitData()
         {
+            if (ChaoticaCore.Courses.Count > 0)
+            {
+                return;
+            }
+
             await ChaoticaCoreWindow.xAsync(() => 
             {
                 //Load vocabulary

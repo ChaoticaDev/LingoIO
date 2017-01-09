@@ -26,6 +26,16 @@
                                Text="Home" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
+
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VocabPage">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="38"
+                                Height="38" Source="ms-appx:///Assets/Dictionary-100.png" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Vocabulary" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.PrimaryButtons>
 <!--
         <Controls:HamburgerMenu.SecondaryButtons>

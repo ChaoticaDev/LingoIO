@@ -132,6 +132,9 @@ namespace Chaotica___LingoIO.Core
                         dict["English"].Add(TitleText, new List<String>());
                     }
                     dict["English"][TitleText].Insert(0, reader.GetString("Spanish"));
+
+                    ChaoticaWord wrd = new ChaoticaWord(TitleText, reader.GetString("Spanish"));
+                    DataCached.VocabularyListCache.Add(wrd);
                 }
 
                 reader.Close();
@@ -146,6 +149,9 @@ namespace Chaotica___LingoIO.Core
                         dict["Spanish"].Add(TitleText, new List<String>());
                     }
                     dict["Spanish"][TitleText].Insert(0, reader.GetString("English"));
+
+                    ChaoticaWord wrd = new ChaoticaWord(TitleText, reader.GetString("English"));
+                    DataCached.VocabularyListCache.Add(wrd);
                 }
 
                 reader.Close();
@@ -216,6 +222,7 @@ namespace Chaotica___LingoIO.Core
         public static class DataCached
         {
             public static Dictionary<String, Dictionary<String, List<String>>> VocabularyCache;
+            public static ObservableCollection<ChaoticaWord> VocabularyListCache;
 
             public static Windows.Storage.ApplicationDataContainer localSettings =  Windows.Storage.ApplicationData.Current.LocalSettings;
             public static Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
@@ -223,6 +230,7 @@ namespace Chaotica___LingoIO.Core
             public static void CacheInit()
             {
                 VocabularyCache = new Dictionary<String, Dictionary<String, List<String>>>();
+                VocabularyListCache = new ObservableCollection<ChaoticaWord>();
             }
         }
 

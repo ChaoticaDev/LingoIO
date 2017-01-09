@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jan 07, 2017 at 10:52 PM
+-- Generation Time: Jan 09, 2017 at 07:57 AM
 -- Server version: 5.6.33-cll-lve
 -- PHP Version: 5.6.20
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `IOSpeech`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Username` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `Language` int(11) NOT NULL DEFAULT '1',
+  `auth` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`ID`, `Username`, `Password`, `Language`, `auth`) VALUES
+(1, 'demo', 'demo', 1, 'MCLTYDAHAFVRUUDTDLOTSMQUDQRBLLGFJAWQWEPRNONKFHODRWIKGUSZLQQILZVOZPIUXNXZWWFEYGOVBNJODWZOHXEFOGFOSZLP');
 
 -- --------------------------------------------------------
 
@@ -71,10 +93,24 @@ INSERT INTO `english_words` (`ID`, `Title`, `Spanish`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `learned`
+-- Table structure for table `learned_courses`
 --
 
-CREATE TABLE IF NOT EXISTS `learned` (
+CREATE TABLE IF NOT EXISTS `learned_courses` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UID` int(11) NOT NULL,
+  `CID` int(11) NOT NULL,
+  `Strength` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `learned_words`
+--
+
+CREATE TABLE IF NOT EXISTS `learned_words` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `UID` int(11) NOT NULL,
   `WID` int(11) NOT NULL,

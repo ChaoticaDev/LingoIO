@@ -1,4 +1,7 @@
 # LingoIO
+
+![Screenshot](https://raw.githubusercontent.com/ChaoticaDev/LingoIO/master/Chaotica%20-%20LingoIO/Assets/Square44x44Logo.scale-200.png)
+
 Language Learning Software for Windows10 Store Apps.
 
 The ultimate goal of this project is to create a language learning suite for Windows10 Store Apps.

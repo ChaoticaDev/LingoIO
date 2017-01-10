@@ -11,8 +11,6 @@ namespace Chaotica___LingoIO.Views
 {
     public sealed partial class VocabPage : Page
     {
-        static ChaoticaDBManager db = new ChaoticaDBManager();
-
         private ObservableCollection<ChaoticaWord> _VocabWords;
         
         public ObservableCollection<ChaoticaWord> VocabWords

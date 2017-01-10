@@ -5,108 +5,136 @@ using System.Text;
 namespace Chaotica___LingoIO.Core
 {
 
-    class ChaoticaDBManager
+    public class ChaoticaDatabase : IDisposable
     {
         //Database details
-        private static String dbuser = "", dbpass = "", dbdbname = "IOSpeech", dbhost = "chaoticadev.com";
+        private String dbuser = "", dbpass = "", dbdbname = "IOSpeech", dbhost = "chaoticadev.com";
 
         //Connect to database
-        public static MySqlConnection connection = new MySql.Data.MySqlClient.MySqlConnection();
+        public MySqlConnection connection = new MySql.Data.MySqlClient.MySqlConnection();
 
-        public static bool connectionOpen { get; private set; }
-        public static string lastErrorMessage { get; internal set; }
+        public bool connectionOpen { get; private set; }
+        public string lastErrorMessage { get; internal set; }
+        
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        //MysqlQuery function
-        public static MySqlDataReader Query(String stmt)
+        internal bool Connect()
         {
-            //Create MySQL Statement
-            MySqlCommand projs = new MySqlCommand(stmt, ChaoticaDBManager.connection);
-
-            //Execute MySQL Reader
-            MySqlDataReader reader = projs.ExecuteReader();
-
-            //return Reader
-            return reader;
-        }
-
-        //MysqlQuery function then close
-        public static void QueryExec(String stmt)
-        {
-            //Execute write_function
-
-            MySqlCommand projs = new MySqlCommand(stmt, ChaoticaDBManager.connection);
-            MySqlDataReader reader = projs.ExecuteReader();
-
-            //Closes reader
-            reader.Close();
-        }
-
-        internal static bool Connect()
-        {
-            String err;
-
             System.Text.EncodingProvider ppp;
             ppp = System.Text.CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
 
             try
             {
-                if (connection.State == ConnectionState.Open)
+                if (this.connection.State == ConnectionState.Open)
                 {
                     return false;
                 }
+
                 //Connection String
-                connection.ConnectionString = "Server=chaoticadev.com;Uid=" + dbuser + ";Pwd=" + dbpass + ";Database=" + dbdbname + ";SslMode=None;CharSet=utf8;";
+                this.connection.ConnectionString = "Server=chaoticadev.com;Uid=" + dbuser + ";Pwd=" + dbpass + ";Database=" + dbdbname + ";SslMode=None;CharSet=utf8;";
 
                 //Open Connection
-                connection.Open();
+                this.connection.Open();
 
-                connectionOpen = true;
+                this.connectionOpen = true;
                 return true;
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                connectionOpen = false;
-                lastErrorMessage = ex.Message;
+                this.connectionOpen = false;
+                this.lastErrorMessage = ex.Message;
                 //Navigation<ErrorView>.Navigate(ex.Message);
                 //Get MySQL Error
-                err = (ex.Message);
                 return false;
             }
         }
-
-        public ChaoticaDBManager()
+        internal void CloseConnection()
         {
-            if (connectionOpen) { return; }
+            if (this.connection.State == ConnectionState.Open)
+            {
+                this.connection.Close();
+            }
+        }
 
-            String err;
-
-            System.Text.EncodingProvider ppp;
-            ppp = System.Text.CodePagesEncodingProvider.Instance;
-            Encoding.RegisterProvider(ppp);
-
+        //MysqlQuery function
+        public MySqlDataReader Query(String stmt)
+        {
             try
             {
-                if (connection.State == ConnectionState.Open)
-                {
-                    return;
-                }
-                //Connection String
-                connection.ConnectionString = "Server=" + dbhost + ";Uid=" + dbuser + ";Pwd=" + dbpass + ";Database=" + dbdbname + ";SslMode=None;CharSet=utf8;";
+                //Create MySQL Statement
+                MySqlCommand projs = new MySqlCommand(stmt, this.connection);
 
-                //Open Connection
-                connection.Open();
+                //Execute MySQL Reader
+                MySqlDataReader reader = projs.ExecuteReader();
 
-                connectionOpen = true;
+                //return Reader
+                return reader;
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                connectionOpen = false;
-                lastErrorMessage = ex.Message;
-                //Navigation<ErrorView>.Navigate(ex.Message);
-                //Get MySQL Error
-                err = (ex.Message);
+                this.lastErrorMessage = ex.Message;
+
+                return null;
             }
         }
+
+        //MysqlQuery function then close
+        public void QueryExec(String stmt)
+        {
+
+            try
+            {
+                //Execute write_function
+                MySqlCommand projs = new MySqlCommand(stmt, this.connection);
+                MySqlDataReader reader = projs.ExecuteReader();
+
+                //Closes reader
+                reader.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                this.lastErrorMessage = ex.Message;
+            }
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    
+                    if(this.connection.State == ConnectionState.Open)
+                    {
+                        this.connection.Close();
+                    }
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~ChaoticaDatabase() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 }

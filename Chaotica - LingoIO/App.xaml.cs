@@ -19,9 +19,12 @@ namespace Chaotica___LingoIO
     sealed partial class App : BootStrapper
     {
 
+        public static ChaoticaDatabase DB = new ChaoticaDatabase();
+
         public App()
         {
             InitializeComponent();
+            DB.Connect();
             SplashFactory = (e) => new Views.Splash(e);
 
             #region app settings

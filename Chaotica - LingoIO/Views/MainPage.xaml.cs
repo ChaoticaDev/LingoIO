@@ -11,7 +11,6 @@ namespace Chaotica___LingoIO.Views
 {
     public sealed partial class MainPage : Page
     {
-        static ChaoticaDBManager db = new ChaoticaDBManager();
 
         private ObservableCollection<ChaoticaCourse> _Questions;
         
@@ -111,7 +110,7 @@ namespace Chaotica___LingoIO.Views
                 return;
             }
 
-            MySqlDataReader reader = ChaoticaDBManager.Query("SELECT * FROM accounts WHERE `Username` = '" + UsernameTB.Text + "'");
+            MySqlDataReader reader = App.DB.Query("SELECT * FROM accounts WHERE `Username` = '" + UsernameTB.Text + "'");
 
             bool found = false;
 
@@ -124,7 +123,7 @@ namespace Chaotica___LingoIO.Views
 
             if (!found)
             {
-                ChaoticaDBManager.QueryExec("INSERT into `accounts` (Username, Password) VALUES ('" + UsernameTB.Text + "', '" + PasswordTB.Text + "')");
+                App.DB.QueryExec("INSERT into `accounts` (Username, Password) VALUES ('" + UsernameTB.Text + "', '" + PasswordTB.Text + "')");
                 LoginBTN_Click(sender, e);
             }else
             {

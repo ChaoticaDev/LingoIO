@@ -5,6 +5,8 @@ The ultimate goal of this project is to create a language learning suite for Win
 
 ![Screenshot](https://github.com/ChaoticaDev/LingoIO/blob/master/ss/ex4.png)
 
+You can find documentation on the [Wiki Page here](https://github.com/ChaoticaDev/LingoIO/wiki)
+
 ## Version Release 0.1.0.0
 - Utilizes Template10
 - Basic Flashcards System
@@ -37,18 +39,9 @@ The ultimate goal of this project is to create a language learning suite for Win
 - More lesson content
 
 ----
-## Current Version Release 0.1.8.0
+## Version Release 0.1.8.0
 - Added vocabulary section
 
-
 ----
-## What's planned for release 0.2.0.0
-- User Profiles
-- Streaks
-- Scores
-- More courses
-- Course manager
-- Timed excercise
-- Vocabulary
-
-You can find documentation on the [Wiki Page here](https://github.com/ChaoticaDev/LingoIO/wiki)
+## Current Version Release 0.1.9.0
+- Database support fixes

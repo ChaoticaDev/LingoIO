@@ -11,6 +11,7 @@ namespace Chaotica___LingoIO.Core
     public enum ChaoticaLanguage
     {
         English,
+        German,
         Spanish
     }
 

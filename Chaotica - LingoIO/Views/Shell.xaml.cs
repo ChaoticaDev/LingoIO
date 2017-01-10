@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Template10.Mvvm;
+using Chaotica___LingoIO.Core;
 
 namespace Chaotica___LingoIO.Views
 {
@@ -16,6 +17,8 @@ namespace Chaotica___LingoIO.Views
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
         Services.SettingsServices.SettingsService _settings;
+        
+        public static ChaoticaDatabase DB = new ChaoticaDatabase();
 
         public Shell()
         {

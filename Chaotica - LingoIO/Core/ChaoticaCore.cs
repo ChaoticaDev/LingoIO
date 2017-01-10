@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Chaotica___LingoIO.Views;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +41,7 @@ namespace Chaotica___LingoIO.Core
         {
             bool auth = false;
 
-            MySqlDataReader reader = App.DB.Query("SELECT * FROM accounts WHERE `Username` = '" + username + "' AND `Password` = '" + password + "' LIMIT 1");
+            MySqlDataReader reader = Shell.DB.Query("SELECT * FROM accounts WHERE `Username` = '" + username + "' AND `Password` = '" + password + "' LIMIT 1");
 
             while (reader.Read())
             {
@@ -58,7 +59,7 @@ namespace Chaotica___LingoIO.Core
 
             String newAuthKey = GenAuthKey();
             DataCached.localSettings.Values["AuthKey"] = newAuthKey;
-            App.DB.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "' LIMIT 1");
+            Shell.DB.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "' LIMIT 1");
 
             return newAuthKey;
         }
@@ -67,7 +68,7 @@ namespace Chaotica___LingoIO.Core
         {
             bool auth = false;
 
-            MySqlDataReader reader = App.DB.Query("SELECT * FROM accounts WHERE auth = '" + auth_key + "'");
+            MySqlDataReader reader = Shell.DB.Query("SELECT * FROM accounts WHERE auth = '" + auth_key + "'");
 
             while (reader.Read())
             {
@@ -86,7 +87,7 @@ namespace Chaotica___LingoIO.Core
 
             String newAuthKey = GenAuthKey();
             DataCached.localSettings.Values["AuthKey"] = newAuthKey;
-            App.DB.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "'");
+            Shell.DB.QueryExec("UPDATE accounts SET auth = '" + newAuthKey + "' WHERE ID = '" + DataCached.localSettings.Values["UID"] + "'");
 
             return newAuthKey;
         }
@@ -119,7 +120,7 @@ namespace Chaotica___LingoIO.Core
                 dict.Add("English", new Dictionary<String, List<String>>());
                 dict.Add("Spanish", new Dictionary<String, List<String>>());
 
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM english_words");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM english_words");
 
                 while (reader.Read())
                 {
@@ -137,7 +138,7 @@ namespace Chaotica___LingoIO.Core
 
                 reader.Close();
 
-                reader = App.DB.Query("SELECT * FROM spanish_words");
+                reader = Shell.DB.Query("SELECT * FROM spanish_words");
 
                 while (reader.Read())
                 {
@@ -237,7 +238,7 @@ namespace Chaotica___LingoIO.Core
             public static ObservableCollection<ChaoticaCourse> GetCourses()
             {
                 ObservableCollection<ChaoticaCourse> crs = new ObservableCollection<ChaoticaCourse>();
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM courses");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM courses WHERE `Language` = '" + App.LearningLanguageID.ToString() + "'");
 
                 ChaoticaCourse course;
                 while (reader.Read())
@@ -254,7 +255,7 @@ namespace Chaotica___LingoIO.Core
             public static ObservableCollection<ChaoticaLesson> GetLessons(String cid)
             {
                 ObservableCollection<ChaoticaLesson> lsn = new ObservableCollection<ChaoticaLesson>();
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM lessons WHERE CID = '" + cid + "'");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM lessons WHERE CID = '" + cid + "'");
 
 
                 while (reader.Read())
@@ -271,15 +272,17 @@ namespace Chaotica___LingoIO.Core
             public static ObservableCollection<ChaoticaQuestion> GetQuestions(String lid)
             {
                 ObservableCollection<ChaoticaQuestion> qsn = new ObservableCollection<ChaoticaQuestion>();
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM questions WHERE LID = '" + lid + "'");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM questions WHERE LID = '" + lid + "'");
 
 
                 while (reader.Read())
                 {
                     ChaoticaQuestion question = new ChaoticaQuestion(reader.GetString("ID"), reader.GetString("Title"));
 
-                    question.LanguageFrom = reader.GetInt32("LFROM") == 1 ? ChaoticaLanguage.English : ChaoticaLanguage.Spanish;
-                    question.LanguageTo = reader.GetInt32("LTO") == 1 ? ChaoticaLanguage.English : ChaoticaLanguage.Spanish;
+                    int qsnLangFrom = reader.GetInt32("LFROM");
+                    int qsnLangTo = reader.GetInt32("LFROM");
+                    question.LanguageFrom = qsnLangFrom == 1 ? ChaoticaLanguage.English : qsnLangFrom == 2 ? ChaoticaLanguage.Spanish : qsnLangFrom == 3 ? ChaoticaLanguage.German : ChaoticaLanguage.Spanish;
+                    question.LanguageTo = qsnLangTo == 1 ? ChaoticaLanguage.English : qsnLangTo == 2 ? ChaoticaLanguage.Spanish : qsnLangTo == 3 ? ChaoticaLanguage.German : ChaoticaLanguage.Spanish;
 
                     question.PossibleAnswers = new ObservableCollection<ChaoticaTarget>();
 
@@ -295,7 +298,7 @@ namespace Chaotica___LingoIO.Core
             public static ObservableCollection<ChaoticaTarget> GetTargets(String qid)
             {
                 ObservableCollection<ChaoticaTarget> tgt = new ObservableCollection<ChaoticaTarget>();
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM question_words WHERE QID = '" + qid + "'");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM question_words WHERE QID = '" + qid + "'");
 
 
                 while (reader.Read())
@@ -312,7 +315,7 @@ namespace Chaotica___LingoIO.Core
             public static ChaoticaWord GetWord(ChaoticaLanguage lang, String id)
             {
                 String lang_words = lang == ChaoticaLanguage.English ? "english_words" : "spanish_words";
-                MySqlDataReader reader = App.DB.Query("SELECT * FROM " + lang_words + " WHERE ID = '" + id + "' LIMIT 1");
+                MySqlDataReader reader = Shell.DB.Query("SELECT * FROM " + lang_words + " WHERE ID = '" + id + "' LIMIT 1");
 
                 ChaoticaWord word = null;
                 while (reader.Read())

@@ -9,6 +9,7 @@ using System.Linq;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using Chaotica___LingoIO.Core;
+using Chaotica___LingoIO.Views;
 
 namespace Chaotica___LingoIO
 {
@@ -18,13 +19,21 @@ namespace Chaotica___LingoIO
     [Bindable]
     sealed partial class App : BootStrapper
     {
+        
+        public static ChaoticaLanguage LearningLanguage = ChaoticaLanguage.Spanish;
 
-        public static ChaoticaDatabase DB = new ChaoticaDatabase();
+        public static int LearningLanguageID
+        {
+            get
+            {
+                return LearningLanguage == ChaoticaLanguage.Spanish ? 2 : LearningLanguage == ChaoticaLanguage.English ? 1 : LearningLanguage == ChaoticaLanguage.German ? 3 : 2;
+            }
+        }
 
         public App()
         {
             InitializeComponent();
-            DB.Connect();
+            Shell.DB.Connect();
             SplashFactory = (e) => new Views.Splash(e);
 
             #region app settings

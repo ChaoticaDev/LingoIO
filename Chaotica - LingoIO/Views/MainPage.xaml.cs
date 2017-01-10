@@ -110,7 +110,7 @@ namespace Chaotica___LingoIO.Views
                 return;
             }
 
-            MySqlDataReader reader = App.DB.Query("SELECT * FROM accounts WHERE `Username` = '" + UsernameTB.Text + "'");
+            MySqlDataReader reader = Shell.DB.Query("SELECT * FROM accounts WHERE `Username` = '" + UsernameTB.Text + "'");
 
             bool found = false;
 
@@ -123,7 +123,7 @@ namespace Chaotica___LingoIO.Views
 
             if (!found)
             {
-                App.DB.QueryExec("INSERT into `accounts` (Username, Password) VALUES ('" + UsernameTB.Text + "', '" + PasswordTB.Text + "')");
+                Shell.DB.QueryExec("INSERT into `accounts` (Username, Password) VALUES ('" + UsernameTB.Text + "', '" + PasswordTB.Text + "')");
                 LoginBTN_Click(sender, e);
             }else
             {

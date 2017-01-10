@@ -7,6 +7,15 @@ The ultimate goal of this project is to create a language learning suite for Win
 
 You can find documentation on the [Wiki Page here](https://github.com/ChaoticaDev/LingoIO/wiki)
 
+
+## Current Version Release 0.1.9.1
+- Database support fixes
+- Groundwork for German support
+
+-----
+
+-----
+
 ## Version Release 0.1.0.0
 - Utilizes Template10
 - Basic Flashcards System
@@ -43,5 +52,5 @@ You can find documentation on the [Wiki Page here](https://github.com/ChaoticaDe
 - Added vocabulary section
 
 ----
-## Current Version Release 0.1.9.0
+## Version Release 0.1.9.0
 - Database support fixes

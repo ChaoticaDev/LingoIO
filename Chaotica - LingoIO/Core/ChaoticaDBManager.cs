@@ -7,6 +7,7 @@ namespace Chaotica___LingoIO.Core
 
     public class ChaoticaDatabase : IDisposable
     {
+        
         //Database details
         private String dbuser = "", dbpass = "", dbdbname = "IOSpeech", dbhost = "chaoticadev.com";
 
@@ -15,7 +16,8 @@ namespace Chaotica___LingoIO.Core
 
         public bool connectionOpen { get; private set; }
         public string lastErrorMessage { get; internal set; }
-        
+
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

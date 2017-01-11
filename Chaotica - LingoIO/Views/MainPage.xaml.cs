@@ -55,12 +55,20 @@ namespace Chaotica___LingoIO.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            String auth = ChaoticaCore.Authenticate(DataCached.localSettings.Values["AuthKey"].ToString());
 
-            if (auth != null)
+            try
             {
-                LoginPanelSP.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                CoursesGV.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                String auth = ChaoticaCore.Authenticate(DataCached.localSettings.Values["AuthKey"].ToString());
+
+                if (auth != null)
+                {
+                    LoginPanelSP.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    CoursesGV.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+            }
+            catch(NullReferenceException ee)
+            {
+                //Console.WriteLine(ee.Message);
             }
         }
 
